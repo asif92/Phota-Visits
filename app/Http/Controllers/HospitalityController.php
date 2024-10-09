@@ -1,0 +1,81 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\MyEvent;
+use Carbon\Carbon;
+
+class HospitalityController extends Controller {
+	public function __construct() {
+		$this->middleware('auth');
+	}
+	public function hospitality() {
+		$current_date = Carbon::today()->format('Y-m-d');
+
+		$events = MyEvent::orderBy('event_time', 'asc')->where('hospitality_allowed', 1)->where('event_date', $current_date)->where('event_confirmation_approval', 1)->get();
+
+		$arrived_part = MyEvent::orderBy('event_time', 'asc')->where('hospitality_allowed', 1)->where('event_date', $current_date)->with(['MyEventParticipants' => function ($query) {
+			$query->where('status_id', 3);
+		}])->where('event_confirmation_approval', 1)->get();
+
+		$remaining_part = MyEvent::orderBy('event_time', 'asc')->where('hospitality_allowed', 1)->where('event_date', $current_date)->with(['MyEventParticipants' => function ($query) {
+			$query->where('status_id', '<>', 3);
+		}])->where('event_confirmation_approval', 1)->get();
+
+		return view('Users.hospitality', compact('events', 'arrived_part', 'remaining_part'));
+
+	}
+
+	public function hospitalityWatcher(Request $request) {
+		// return $request->selected_event_id;
+		return $event_id = $request->selected_event_id;
+		$current_date = Carbon::today()->format('Y-m-d');
+		$arrived_part = MyEvent::orderBy('event_time', 'asc')->where('hospitality_allowed', 1)->where('event_date', $current_date)->with(['MyEventParticipants' => function ($query) {
+			$query->where('status_id', 3);
+		}])->find($event_id);
+
+		$remaining_part = MyEvent::orderBy('event_time', 'asc')->where('hospitality_allowed', 1)->where('event_date', $current_date)->with(['MyEventParticipants' => function ($query) {
+			$query->where('status_id', '<>', 3);
+		}])->find($event_id);
+
+		$data = ['arrived_part' => count($arrived_part->MyEventParticipants), 'remaining_part' => count($remaining_part->MyEventParticipants), 'total_part' => (count($arrived_part->MyEventParticipants) + count($remaining_part->MyEventParticipants))];
+		return $data;
+
+	}
+
+	public function HospitalityEventsWatcher() {
+		$current_date = Carbon::today()->format('Y-m-d');
+		$events = MyEvent::with('eventStatus')->orderBy('event_time', 'asc')->where('event_date', $current_date)->get();
+		$now = Carbon::now()->timezone('Asia/Karachi')->toTimeString();
+		for ($i = 0; $i < count($events); $i++) {
+
+			$end_time = Carbon::parse($events[$i]->event_time)->addMinutes($events[$i]->time_span)->toTimeString();
+			if ($end_time < $now) {
+				$event = MyEvent::find($events[$i]->id);
+				if ($event->event_status_id != 5) {
+					$event->event_status_id = 6;
+				}
+				$event->save();
+			}
+		}
+		return $events;
+	}
+	public function getUpcomingEvents() {
+		$current_date = Carbon::today()->format('Y-m-d');
+		$events = MyEvent::orderBy('event_date', 'desc')->orderBy('event_time', 'asc')->where('event_type_id', 1)->where('event_date', '>', $current_date)->paginate(10);
+		// $private_meeting = MyEvent::orderBy('event_date', 'desc')->orderBy('event_time', 'asc')->where('event_type_id', 2)->where('event_date', '>', $current_date)->paginate(10);
+		// $visits = MyEvent::orderBy('event_date', 'desc')->orderBy('event_time', 'asc')->where('event_type_id', 3)->where('event_date', '>', $current_date)->paginate(10);
+		return $events;
+		// $this->hospitalityWatcher();
+		// return $events = array_merge($meeting->data, $private_meeting->data, $visits->data);
+	}
+	public function hospitalityUpcoming() {
+		$current_date = Carbon::today()->format('Y-m-d');
+		$events = MyEvent::orderBy('event_date', 'desc')->orderBy('event_time', 'asc')->where('event_type_id', 1)->where('event_date', '>', $current_date)->with(['MyEventParticipants' => function ($query) {
+			$query->where('status_id', 1);
+		}])->get();
+
+		return view('Users.hospitalityUpcoming', compact('events'));
+	}
+}
