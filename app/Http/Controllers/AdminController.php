@@ -334,104 +334,6 @@ class AdminController extends Controller {
 
 		//    return redirect('eventDetail/'.$event->id);
 	}
-	// public function storeEvent(Request $request) {
-	// 	$meeting = "true";
-	// 	$colon = ":";
-	// 	$events = MyEvent::all();
-	// 	foreach ($events as $event) {
-	// 		$date = date_create($event->event_date);
-	// 		$event_time[] = date("G:i", strtotime($event->event_time));
-	// 		$event_date[] = date_format($date, "Y/m/d");
-	// 		$event_span[] = $event->time_span;
-	// 	}
-
-	// 	$date = date_create($request->input('event_date'));
-	// 	$input_date_format = date_format($date, "Y/m/d");
-
-	// 	for ($i = 0; $i < count($event_time); $i++) {
-	// 		$event_time_separtor[] = explode(':', $event_time[$i]);
-
-	// 	}
-
-	// 	for ($i = 0; $i < count($event_time_separtor); $i++) {
-	// 		$event_minutes_time_start[] = $event_time_separtor[$i][0] * 60 + $event_time_separtor[$i][1];
-
-	// 	}
-
-	// 	for ($i = 0; $i < count($event_minutes_time_start); $i++) {
-
-	// 		$event_minutes_time_end[] = $event_minutes_time_start[$i] + $event_span[$i];
-
-	// 	}
-
-	// 	$input_event_time = date("G:i", strtotime($request->input('event_time')));
-	// 	$time_separtor = explode(':', $input_event_time);
-	// 	$time_separtor[0]; //hour
-	// 	$time_separtor[1]; //minutes_status
-	// 	$time_status_separator = explode(' ', $time_separtor[1]);
-	// 	// $time_status = $time_status_separator[1]; //Am or Pm
-
-	// 	$get_form_time = $time_separtor[0] * 60 + $time_separtor[1];
-	// 	$get_span_form_time = $get_form_time + $request->input('time_span');
-
-	// 	for ($i = 0; $i < count($event_minutes_time_start); $i++) {
-
-	// 		if ($get_form_time > $event_minutes_time_start[$i] && $get_form_time < $event_minutes_time_end[$i] && $input_date_format == $event_date[$i]) {
-	// 			$meeting = "false";
-
-	// 		}
-
-	// 		if ($get_form_time < $event_minutes_time_start[$i] && $get_span_form_time > $event_minutes_time_start[$i]) {
-
-	// 			$meeting = "false";
-
-	// 		}
-
-	// 		if ($get_form_time < $event_minutes_time_start[$i] && $get_span_form_time > $event_minutes_time_end[$i]) {
-
-	// 			$meeting = "false";
-
-	// 		}
-
-	// 	}
-
-	// 	if ($meeting == "false") {
-	// 		return "no slot";
-	// 	} else {
-	// 		if ($request->input('hospitality_check') == 'on') {
-	// 			$check_hospitality = 1;
-	// 			$hospitality_package_id = $request->input('hospitality_package_id');
-	// 		} else {
-	// 			$check_hospitality = 0;
-	// 			$hospitality_package_id = null;
-	// 		}
-
-	// 		$event = new MyEvent();
-	// 		$event->event_type_id = $request->input('event_type_id');
-	// 		$event->event_title = $request->input('event_title');
-	// 		$event->hospitality_allowed = $check_hospitality;
-	// 		$event->event_description = $request->input('event_description');
-	// 		$event->event_venue = $request->input('event_venue');
-	// 		$event->event_remarks = $request->input('event_remarks');
-
-	// 		$event->event_date = $request->input('event_date');
-	// 		$event->event_time = $request->input('event_time');
-	// 		$event->time_span = $request->input('time_span');
-	// 		$event->event_status_id = 1;
-
-	// 		if (isset($hospitality_package_id)) {
-	// 			$event->hospitality_package_id = $hospitality_package_id;
-	// 		} else {
-	// 			$event->hospitality_package_id = $hospitality_package_id;
-	// 		}
-
-	// 		$event->save();
-
-	// 		return "slot aloted";
-	// 	}
-
-	// 	//	return redirect('eventDetail/'.$event->id);
-	// }
 
 	public function editEvent($id) {
 		$event = MyEvent::find($id);
@@ -569,34 +471,6 @@ class AdminController extends Controller {
 			return "slot aloted";
 		}
 
-		// if ($request->input('hospitality_check') == 'on') {
-		// 	$check_hospitality = 1;
-		// 	$hospitality_package_id = $request->input('hospitality_package_id');
-		// } else {
-		// 	$check_hospitality = 0;
-		// 	$hospitality_package_id = null;
-		// }
-
-		// $event = MyEvent::find($request->input('event_id'));
-		// $event->event_type_id = $request->input('event_type_id');
-		// $event->event_title = $request->input('event_title');
-		// $event->hospitality_allowed = $check_hospitality;
-		// $event->event_description = $request->input('event_description');
-		// $event->event_venue = $request->input('event_venue');
-		// $event->event_date = $request->input('event_date');
-		// $event->event_remarks = $request->input('event_remarks');
-		// $event->event_time = $request->input('event_time');
-		// $event->time_span = $request->input('time_span');
-		// $event->event_status_id = 1;
-
-		// if (isset($hospitality_package_id)) {
-		// 	$event->hospitality_package_id = $hospitality_package_id;
-		// } else {
-		// 	$event->hospitality_package_id = $hospitality_package_id;
-		// }
-
-		// $event->save();
-		// return redirect()->back();
 	}
 
 	public function hospitalityPackage() {

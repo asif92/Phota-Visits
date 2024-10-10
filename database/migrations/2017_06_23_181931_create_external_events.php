@@ -21,6 +21,7 @@ class CreateExternalEvents extends Migration {
 			$table->string('event_remarks');
 			$table->tinyInteger('event_confirmation_approval')->default(0);
 			$table->timestamps();
+            $table->softDeletes();
 		});
 	}
 

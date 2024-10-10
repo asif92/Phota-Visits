@@ -18,6 +18,7 @@ class CreateVehiclesTable extends Migration
             $table->string('vehicle_registation_number');
             $table->string('vehicle_maker')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
     }

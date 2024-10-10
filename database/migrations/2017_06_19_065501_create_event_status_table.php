@@ -18,6 +18,7 @@ class CreateEventStatusTable extends Migration
         $table->string('event_status_name');
         $table->string('event_status_color');
         $table->timestamps();
+        $table->softDeletes();
     });
    }
 

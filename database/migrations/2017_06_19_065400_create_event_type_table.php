@@ -18,6 +18,7 @@ class CreateEventTypeTable extends Migration
         $table->string('event_type_name');
         $table->string('event_type_color');
         $table->timestamps();
+        $table->softDeletes();
     });
    }
 

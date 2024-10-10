@@ -19,6 +19,7 @@ class CreateParticipantsTable extends Migration {
 			$table->string('participant_designation')->nullable();
 			$table->string('participant_email')->nullable();
 			$table->timestamps();
+            $table->softDeletes();
 		});
 
 	}

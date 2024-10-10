@@ -41,6 +41,7 @@ class CreateMyEventsTable extends Migration {
 				->on('event_types')
 				->onDelete('cascade');
 			$table->timestamps();
+            $table->softDeletes();
 		});
 
 		Schema::create('my_event_participant', function (Blueprint $table) {
@@ -66,6 +67,7 @@ class CreateMyEventsTable extends Migration {
 				->onDelete('cascade');
 
 			$table->timestamps();
+            $table->softDeletes();
 		});
 
 		Schema::create('event_vehicles', function (Blueprint $table) {
@@ -87,6 +89,7 @@ class CreateMyEventsTable extends Migration {
 			$table->integer('vehicleable_id');
 			$table->string('vehicleable_type');
 			$table->timestamps();
+            $table->softDeletes();
 		});
 
 	}

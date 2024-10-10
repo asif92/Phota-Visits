@@ -17,6 +17,7 @@ class CreateHospitalityPackages extends Migration
             $table->increments('id');
             $table->string('package_item_menu');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

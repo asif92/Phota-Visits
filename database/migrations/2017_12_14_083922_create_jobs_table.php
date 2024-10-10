@@ -23,6 +23,7 @@ class CreateJobsTable extends Migration
             $table->unsignedInteger('created_at');
 
             $table->index(['queue', 'reserved_at']);
+            $table->softDeletes();
         });
     }
 

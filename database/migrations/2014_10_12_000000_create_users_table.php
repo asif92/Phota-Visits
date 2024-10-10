@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->enum('user_type',config('phota.APP_USERTYPE'));
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
