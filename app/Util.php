@@ -32,7 +32,6 @@ class Util {
 		foreach ($allParticipants as $singleParticipant) {
 
 			$mobile = $singleParticipant->participant->participant_contact;
-			// $mobile = '923344283159';
 			$message = "Dear " . $singleParticipant->participant->participant_name . ". Your meeting at Punjab Human Organ Transplan Authority office with" . $singleEvent->inviting_official . " has been confirmed on  " . $singleEvent->event_date . " at " . $singleEvent->event_time;
 
 			$url = env('SMS_PROVIDER') . "?username=" . $username . "&password=" . $password . "&mobile=" . $mobile . "&sender=" . urlencode($sender) . "&message=" . urlencode($message) . "";
