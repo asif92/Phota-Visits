@@ -5,8 +5,10 @@ namespace App;
 use App\Mail\NotifyParticipant;
 use App\MyEvent;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Util {
+	use SoftDeletes;
 	public function sendEmail($id) {
 
 		$singleEvent = MyEvent::find($id);

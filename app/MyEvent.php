@@ -5,9 +5,11 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use DateTime;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MyEvent extends Model
 {
+	use SoftDeletes;
 	protected $table = 'my_events';
 	protected $fillable = [
 	'event_type_id','event_title','event_description', 'event_date','event_time','event_status_id','event_venue','hospitality_package_id','time_span','event_remarks'
